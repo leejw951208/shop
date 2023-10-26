@@ -8,6 +8,8 @@ plugins {
 	kotlin("plugin.jpa") version "1.8.22"
 	kotlin("plugin.allopen") version "1.8.22"
 	kotlin("plugin.noarg") version "1.8.22"
+	kotlin("kapt") version "1.8.22"
+	idea
 }
 
 allOpen {
@@ -24,6 +26,7 @@ noArg {
 
 group = "com.example"
 version = "0.0.1-SNAPSHOT"
+val queryDslVersion = "5.0.0" // QueryDSL Version Setting
 
 java {
 	sourceCompatibility = JavaVersion.VERSION_17
@@ -38,13 +41,30 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+	implementation("org.jetbrains.kotlin:kotlin-reflect")
+
+	// querydsl
+	implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
+	kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
+	kapt("jakarta.annotation:jakarta.annotation-api")
+	kapt("jakarta.persistence:jakarta.persistence-api")
+
+	// jwt
 	implementation("io.jsonwebtoken:jjwt-api:0.11.5")
 	implementation("io.jsonwebtoken:jjwt-impl:0.11.5")
 	implementation("io.jsonwebtoken:jjwt-jackson:0.11.5")
-	implementation("org.jetbrains.kotlin:kotlin-reflect")
+
 	runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test")
+}
+
+idea {
+	module {
+		val kaptMain = file("$buildDir/generated/querydsl")
+		sourceDirs.add(kaptMain)
+		generatedSourceDirs.add(kaptMain)
+	}
 }
 
 tasks.withType<KotlinCompile> {

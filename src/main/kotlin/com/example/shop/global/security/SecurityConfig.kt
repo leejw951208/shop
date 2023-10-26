@@ -25,6 +25,9 @@ class SecurityConfig {
             .sessionManagement { session: SessionManagementConfigurer<HttpSecurity> -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .formLogin { formLogin: FormLoginConfigurer<HttpSecurity> -> formLogin.disable() }
             .httpBasic { httpBasic: HttpBasicConfigurer<HttpSecurity> -> httpBasic.disable() }
+            .authorizeHttpRequests { authorize ->
+                authorize.anyRequest().permitAll()
+            }
         return http.build()
     }
 
