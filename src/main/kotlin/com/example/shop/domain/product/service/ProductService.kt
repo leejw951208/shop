@@ -8,5 +8,7 @@ import org.springframework.stereotype.Service
 class ProductService(
     private val productRepository: ProductRepository
 ) {
-    fun findProducts() {}
+    fun findProductsByCategoryId(categoryId: Long) {
+
+    }
 }
