@@ -1,7 +1,9 @@
 package com.example.shop.domain.product.entity
 
 import com.example.shop.global.entity.BaseEntity
+import com.example.shop.global.entity.BaseTimeEntity
 import jakarta.persistence.*
+import org.hibernate.annotations.Comment
 import org.hibernate.annotations.DynamicUpdate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
 
@@ -12,8 +14,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener
 class Product(
     category: Category?,
     productName: String?,
-    price: Int?
-) : BaseEntity() {
+    price: Int?,
+    createdUserId: Long?,
+    modifiedUserId: Long?,
+) : BaseTimeEntity() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
@@ -31,5 +35,15 @@ class Product(
 
     @Column(name = "price")
     var price = price
+        protected set
+
+    @Comment("등록자")
+    @Column(name = "created_user_id")
+    var createdUserId = createdUserId
+        protected set
+
+    @Comment("수정자")
+    @Column(name = "modified_user_id")
+    var modifiedUserId = modifiedUserId
         protected set
 }

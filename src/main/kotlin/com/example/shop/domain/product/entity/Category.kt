@@ -1,6 +1,5 @@
 package com.example.shop.domain.product.entity
 
-import com.example.shop.global.entity.BaseEntity
 import com.example.shop.global.entity.BaseTimeEntity
 import jakarta.persistence.*
 import org.hibernate.annotations.Comment
@@ -12,7 +11,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener
 @Entity
 @Table(name = "t_category")
 class Category(
-    parentCategoryId: Category?,
+    parentCategory: Category?,
     categoryName: String?,
     createdUserId: Long?,
     modifiedUserId: Long?,
@@ -25,7 +24,7 @@ class Category(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_category_id")
-    var parentCategoryId = parentCategoryId
+    var parentCategory = parentCategory
         protected set
 
     @Column(name = "category_name")
