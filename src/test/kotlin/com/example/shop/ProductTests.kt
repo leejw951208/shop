@@ -1,6 +1,5 @@
 package com.example.shop
 
-import com.example.shop.domain.product.entity.Category
 import com.example.shop.domain.product.entity.Product
 import com.example.shop.domain.product.repository.CategoryRepository
 import com.example.shop.domain.product.repository.ProductRepository
@@ -10,7 +9,6 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.data.repository.findByIdOrNull
-import org.springframework.test.annotation.Rollback
 import org.springframework.transaction.annotation.Transactional
 
 @SpringBootTest
@@ -42,9 +40,20 @@ class ProductTests @Autowired constructor(
     }
 
     @Test
-    @DisplayName("상품 조회 테스트")
-    fun find() {
-        val findProducts = productService.findProducts(8L)
+    @Transactional
+    @DisplayName("카테고리 별 전체 상품 조회 테스트")
+    fun findByParentCategoryId() {
+        val findProducts = productService.findProductsByParentCategoryId(8L)
+        for (findProduct in findProducts) {
+            println(findProduct)
+        }
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("상세 카테고리 별 전체 상품 조회 테스트")
+    fun findByCategoryId() {
+        val findProducts = productService.findProductsByCategoryId(9L)
         for (findProduct in findProducts) {
             println(findProduct)
         }

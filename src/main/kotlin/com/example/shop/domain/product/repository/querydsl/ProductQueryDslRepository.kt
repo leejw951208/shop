@@ -1,8 +1,10 @@
 package com.example.shop.domain.product.repository.querydsl
 
-import com.example.shop.domain.product.dto.ProductsDto
+import com.example.shop.domain.product.dto.ProductDto
 import org.springframework.stereotype.Repository
 
+@Repository
 interface ProductQueryDslRepository {
-    fun findProducts(categoryIds: List<Long>): MutableList<ProductsDto>
+    fun findProductsByParentCategoryIdMadeByQueryDsl(parentCategoryId: Long): MutableList<ProductDto>
+    fun findProductsByCategoryIdMadeByQueryDsl(categoryId: Long): MutableList<ProductDto>
 }

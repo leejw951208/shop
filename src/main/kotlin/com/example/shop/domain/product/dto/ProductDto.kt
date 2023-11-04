@@ -1,6 +1,6 @@
 package com.example.shop.domain.product.dto
 
-data class ProductsDto(
+data class ProductDto(
     val productId: Long,
     val productName: String,
     val price: Int,

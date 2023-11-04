@@ -1,19 +1,21 @@
 package com.example.shop.domain.product.service
 
-import com.example.shop.domain.product.dto.ProductsDto
+import com.example.shop.domain.product.dto.ProductDto
 import com.example.shop.domain.product.repository.ProductRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class ProductService(
-    private val productRepository: ProductRepository,
-    private val categoryService: CategoryService
+    private val productRepository: ProductRepository
 ) {
     @Transactional(readOnly = true)
-    fun findProducts(parentCategoryId: Long): List<ProductsDto> {
-        val findChildCategories = categoryService.findChildCategories(parentCategoryId)
-        val categoryIds = ArrayList<Long>()
-        return productRepository.findProducts(findChildCategories.mapTo(categoryIds) { findSubCategory -> findSubCategory.categoryId })
+    fun findProductsByParentCategoryId(parentCategoryId: Long): MutableList<ProductDto> {
+        return productRepository.findProductsByParentCategoryIdMadeByQueryDsl(parentCategoryId)
+    }
+
+    @Transactional(readOnly = true)
+    fun findProductsByCategoryId(categoryId: Long): MutableList<ProductDto> {
+        return productRepository.findProductsByCategoryIdMadeByQueryDsl(categoryId)
     }
 }
