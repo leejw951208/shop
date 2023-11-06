@@ -13,12 +13,16 @@ import org.springframework.web.bind.annotation.RestController
 class ProductController(
     private val productService: ProductService
 ) {
-    @GetMapping("/api/product/{parentCategoryId}")
+    @GetMapping("/api/product/categories/{parentCategoryId}")
     fun findProductsByParentCategoryId(@PathVariable("parentCategoryId") parentCategoryId: Long): ResponseEntity<MutableList<ProductDto>> {
         return ResponseEntity.ok(productService.findProductsByParentCategoryId(parentCategoryId))
     }
-    @GetMapping("/api/product/{parentCategoryId}/{categoryId}")
+    @GetMapping("/api/product/categories/{parentCategoryId}/{categoryId}")
     fun findProductsByCategoryId(@PathVariable("categoryId") categoryId: Long): ResponseEntity<List<ProductDto>> {
         return ResponseEntity.ok(productService.findProductsByCategoryId(categoryId))
+    }
+    @GetMapping("/api/product/{productId}")
+    fun findProductByProductId(@PathVariable("productId") productId: Long): ResponseEntity<ProductDto> {
+        return ResponseEntity.ok(productService.findProductByProductId(productId))
     }
 }

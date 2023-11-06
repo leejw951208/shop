@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository
 interface ProductQueryDslRepository {
     fun findProductsByParentCategoryIdMadeByQueryDsl(parentCategoryId: Long): MutableList<ProductDto>
     fun findProductsByCategoryIdMadeByQueryDsl(categoryId: Long): MutableList<ProductDto>
+    fun findProductByProductIdMadeByQueryDsl(productId: Long): ProductDto?
 }

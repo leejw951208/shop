@@ -47,4 +47,21 @@ class ProductQueryDslRepositoryImpl(
             .where(product.category.categoryId.eq(categoryId))
             .fetch()
     }
+
+    override fun findProductByProductIdMadeByQueryDsl(productId: Long): ProductDto? {
+        return queryFactory
+            .select(
+                Projections.constructor(
+                    ProductDto::class.java,
+                    product.productId.`as`("productId"),
+                    product.productName.`as`("productName"),
+                    product.price.`as`("price"),
+                    product.category.categoryId.`as`("categoryId"),
+                    product.category.categoryName.`as`("categoryName")
+                )
+            )
+            .from(product)
+            .where(product.productId.eq(productId))
+            .fetchOne()
+    }
 }
